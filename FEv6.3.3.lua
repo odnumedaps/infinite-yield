@@ -1,3 +1,16 @@
+if IY_LOADED and not _G.IY_DEBUG == true then
+    -- error("Infinite Yield is already running!", 0)
+    return
+end
+
+pcall(function() getgenv().IY_LOADED = true end)
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+function missing(t, f, fallback)
+    if type(f) == t then return f end
+    return fallback
+end
+
 local playerGui = player:WaitForChild("PlayerGui")
 
 ---------------------------------------------------------
@@ -63,19 +76,6 @@ local btnCorner1 = Instance.new("UICorner")
 btnCorner1.CornerRadius = UDim.new(0, 8)
 btnCorner1.Parent = okayBtn
 
-if IY_LOADED and not _G.IY_DEBUG == true then
-    -- error("Infinite Yield is already running!", 0)
-    return
-end
-
-pcall(function() getgenv().IY_LOADED = true end)
-if not game:IsLoaded() then game.Loaded:Wait() end
-
-function missing(t, f, fallback)
-    if type(f) == t then return f end
-    return fallback
-end
-
 cloneref = missing("function", cloneref, function(...) return ... end)
 sethidden =  missing("function", sethiddenproperty or set_hidden_property or set_hidden_prop)
 gethidden =  missing("function", gethiddenproperty or get_hidden_property or get_hidden_prop)
@@ -98,6 +98,7 @@ isfile = missing("function", isfile, readfile and function(file)
     end)
     return success and result ~= nil and result ~= ""
 end)
+
 makefolder = missing("function", makefolder)
 isfolder = missing("function", isfolder)
 waxgetcustomasset = missing("function", getcustomasset or getsynasset)
